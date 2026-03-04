@@ -1,0 +1,2470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeForge — Code Editor</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/one-dark.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/monokai.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/nord.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/solarized.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/material-darker.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/night.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/zenburn.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/tomorrow-night-eighties.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/twilight.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/eclipse.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/github.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/clike/clike.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/rust/rust.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/go/go.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/shell/shell.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/sql/sql.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/markdown/markdown.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/yaml/yaml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/toml/toml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/php/php.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/ruby/ruby.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/swift/swift.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/r/r.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/comment/comment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldgutter.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/brace-fold.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/indent-fold.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/search.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/searchcursor.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/search/jump-to-line.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/javascript-hint.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldgutter.min.css">
+
+<!-- Skulpt (Python) loaded dynamically on first Python run -->
+
+<style>
+  :root {
+    --bg-deepest: #0d0f14;
+    --bg-deep: #11141b;
+    --bg-panel: #161922;
+    --bg-surface: #1c2030;
+    --bg-hover: #222840;
+    --bg-active: #252a3d;
+    --border: #2a3050;
+    --border-bright: #3a4570;
+    --accent: #f0a050;
+    --accent-dim: #c07830;
+    --accent-glow: rgba(240,160,80,0.15);
+    --green: #50e090;
+    --green-dim: #30a060;
+    --red: #f05060;
+    --blue: #60b0f0;
+    --purple: #a070f0;
+    --text-primary: #e8eaf0;
+    --text-secondary: #8890b0;
+    --text-muted: #525878;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --font-ui: 'Syne', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-ui);
+    background: var(--bg-deepest);
+    color: var(--text-primary);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── TITLEBAR ── */
+  #titlebar {
+    height: 42px;
+    background: var(--bg-deep);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 12px;
+    flex-shrink: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .logo-icon {
+    width: 22px; height: 22px;
+    background: var(--accent);
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    color: #000;
+    font-weight: 800;
+  }
+
+  .tab-bar {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    gap: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+
+  .tab {
+    height: 30px;
+    padding: 0 14px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all .15s;
+    position: relative;
+  }
+  .tab.active {
+    background: var(--bg-surface);
+    border-color: var(--accent);
+    border-bottom-color: var(--bg-surface);
+    color: var(--text-primary);
+  }
+  .tab:hover:not(.active) { background: var(--bg-hover); color: var(--text-primary); }
+  .tab .tab-close {
+    width: 14px; height: 14px;
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    opacity: 0.4;
+    transition: opacity .1s, background .1s;
+  }
+  .tab:hover .tab-close { opacity: 1; }
+  .tab .tab-close:hover { background: var(--red); opacity: 1; }
+  .tab .lang-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .tab-add {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    border: 1px dashed var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all .15s;
+    flex-shrink: 0;
+  }
+  .tab-add:hover { border-color: var(--accent); color: var(--accent); }
+
+  .titlebar-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+  }
+
+  #autosave-indicator {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: color .3s;
+  }
+  #autosave-indicator.saved { color: var(--green); }
+  #autosave-indicator.saving { color: var(--accent); }
+  .save-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .btn {
+    height: 28px;
+    padding: 0 12px;
+    border-radius: 6px;
+    border: none;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 5px;
+    transition: all .15s;
+    letter-spacing: 0.3px;
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: var(--border-bright); color: var(--text-primary); background: var(--bg-hover); }
+  .btn-run {
+    background: var(--green);
+    color: #001a0a;
+    font-weight: 700;
+    box-shadow: 0 0 12px rgba(80,224,144,0.2);
+  }
+  .btn-run:hover { background: #60f0a0; box-shadow: 0 0 20px rgba(80,224,144,0.35); }
+  .btn-run:active { transform: scale(0.97); }
+  .btn-run.loading {
+    background: var(--green-dim);
+    cursor: not-allowed;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  #main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    width: 220px;
+    background: var(--bg-panel);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    overflow: hidden;
+    transition: width .25s;
+  }
+  #sidebar.collapsed { width: 0; }
+
+  .sidebar-section {
+    padding: 10px 12px 6px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .file-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 6px 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .file-item {
+    height: 30px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    transition: all .1s;
+    border-left: 2px solid transparent;
+    position: relative;
+  }
+  .file-item:hover { background: var(--bg-hover); color: var(--text-primary); }
+  .file-item.active {
+    background: var(--bg-active);
+    color: var(--accent);
+    border-left-color: var(--accent);
+  }
+  .file-item .fi-icon { font-size: 13px; flex-shrink: 0; }
+  .file-item .fi-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .file-item .fi-del {
+    display: none; font-size: 10px; padding: 2px 4px;
+    border-radius: 3px; color: var(--red);
+  }
+  .file-item:hover .fi-del { display: block; }
+  .file-item .fi-del:hover { background: rgba(240,80,96,.2); }
+
+  .sidebar-actions {
+    padding: 8px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 6px;
+  }
+  .sidebar-actions .btn { flex: 1; font-size: 10px; justify-content: center; }
+
+  /* ── LANGUAGE PANEL ── */
+  #lang-panel {
+    padding: 8px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .lang-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    padding: 0 4px;
+  }
+  #lang-select {
+    width: 100%;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    padding: 5px 8px;
+    cursor: pointer;
+    outline: none;
+  }
+  #lang-select:focus { border-color: var(--accent); }
+
+  /* ── EDITOR AREA ── */
+  #editor-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-width: 0;
+  }
+
+  #editor-container {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .CodeMirror {
+    height: 100% !important;
+    font-family: var(--font-mono) !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    background: var(--bg-deepest) !important;
+    color: var(--text-primary) !important;
+  }
+  .CodeMirror-scroll { height: 100%; }
+  .CodeMirror-gutters {
+    background: var(--bg-deep) !important;
+    border-right: 1px solid var(--border) !important;
+  }
+  .CodeMirror-linenumber { color: var(--text-muted) !important; }
+  .CodeMirror-cursor { border-left: 2px solid var(--accent) !important; }
+  .CodeMirror-selected { background: rgba(240,160,80,0.18) !important; }
+  /* Force light themes to still show light text on dark bg */
+  .cm-s-eclipse .CodeMirror-code,
+  .cm-s-default .CodeMirror-code,
+  .cm-s-github .CodeMirror-code,
+  .cm-s-solarized.cm-s-light .CodeMirror-code {
+    color: var(--text-primary) !important;
+  }
+  .CodeMirror-foldgutter-open, .CodeMirror-foldgutter-folded { color: var(--text-muted); cursor: pointer; }
+
+  /* ── STATUS BAR ── */
+  #statusbar {
+    height: 24px;
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+  .status-item { display: flex; align-items: center; gap: 4px; }
+  #cursor-pos { color: var(--text-secondary); }
+
+  /* ── OUTPUT PANEL ── */
+  #output-panel {
+    height: 240px;
+    background: var(--bg-deep);
+    border-top: 2px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    transition: height .25s;
+  }
+  #output-panel.hidden { height: 0; overflow: hidden; border: none; }
+  #output-panel.maximized { height: 60%; }
+
+  .output-header {
+    height: 36px;
+    background: var(--bg-panel);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .output-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+  }
+  .output-tabs {
+    display: flex;
+    gap: 4px;
+    margin-left: 8px;
+  }
+  .output-tab {
+    height: 22px;
+    padding: 0 10px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    font-size: 11px;
+    font-family: var(--font-ui);
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-muted);
+    background: transparent;
+    transition: all .15s;
+  }
+  .output-tab.active { background: var(--bg-surface); border-color: var(--border); color: var(--text-primary); }
+  .output-tab:hover:not(.active) { color: var(--text-secondary); }
+
+  .output-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 6px;
+  }
+  .icon-btn {
+    width: 24px; height: 24px;
+    border-radius: 4px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    transition: all .15s;
+  }
+  .icon-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+  #output-content {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .output-pane {
+    display: none;
+    height: 100%;
+  }
+  .output-pane.active { display: block; }
+
+  #console-output {
+    height: 100%;
+    overflow-y: auto;
+    padding: 10px 16px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.6;
+    background: var(--bg-deepest);
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .console-line { display: flex; gap: 8px; padding: 1px 0; }
+  .console-line.error { color: var(--red); }
+  .console-line.warn { color: var(--accent); }
+  .console-line.info { color: var(--blue); }
+  .console-line.log { color: var(--text-primary); }
+  .console-line.success { color: var(--green); }
+  .console-line.system { color: var(--text-muted); font-style: italic; }
+  .console-prefix { color: var(--text-muted); flex-shrink: 0; }
+
+  #preview-output {
+    height: 100%;
+    background: #fff;
+  }
+  #preview-output iframe {
+    width: 100%; height: 100%;
+    border: none;
+  }
+
+  /* ── RESIZE HANDLE ── */
+  #resize-handle {
+    height: 4px;
+    background: transparent;
+    cursor: ns-resize;
+    transition: background .15s;
+    flex-shrink: 0;
+  }
+  #resize-handle:hover { background: var(--accent); }
+
+  /* ── WELCOME ── */
+  #welcome-overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--bg-deepest);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  #welcome-overlay.show { opacity: 1; pointer-events: all; }
+  .welcome-logo {
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -2px;
+  }
+  .welcome-sub {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+  .welcome-shortcuts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 24px;
+    margin-top: 8px;
+  }
+  .shortcut-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+  }
+  kbd {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 10px;
+    color: var(--accent);
+    font-family: var(--font-mono);
+  }
+
+  /* ── NEW FILE MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-bright);
+    border-radius: 12px;
+    padding: 24px;
+    width: 380px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .modal h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+  }
+  .modal-field { margin-bottom: 12px; }
+  .modal-field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+  }
+  .modal-field input, .modal-field select {
+    width: 100%;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 8px 10px;
+    outline: none;
+    transition: border-color .15s;
+  }
+  .modal-field input:focus, .modal-field select:focus { border-color: var(--accent); }
+  .modal-actions { display: flex; gap: 8px; margin-top: 20px; justify-content: flex-end; }
+
+  /* ── SETTINGS PANEL ── */
+  #settings-panel {
+    position: fixed;
+    top: 0; right: -360px;
+    width: 360px;
+    height: 100vh;
+    background: var(--bg-panel);
+    border-left: 1px solid var(--border);
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+    transition: right .3s cubic-bezier(0.4,0,0.2,1);
+    box-shadow: -8px 0 40px rgba(0,0,0,0.4);
+  }
+  #settings-panel.open { right: 0; }
+
+  .settings-header {
+    height: 52px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .settings-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: var(--text-primary);
+  }
+  .settings-close {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s;
+  }
+  .settings-close:hover { background: var(--bg-hover); color: var(--red); border-color: var(--red); }
+
+  .settings-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 0 20px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .settings-section {
+    padding: 16px 20px 4px;
+  }
+  .settings-section-title {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* UI Theme cards */
+  .theme-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .theme-card {
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color .15s, transform .1s;
+    position: relative;
+  }
+  .theme-card:hover { border-color: var(--border-bright); transform: scale(1.02); }
+  .theme-card.active { border-color: var(--accent); }
+  .theme-card.active::after {
+    content: '✓';
+    position: absolute;
+    top: 4px; right: 6px;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .theme-preview {
+    height: 52px;
+    display: flex;
+    flex-direction: column;
+    padding: 6px 8px;
+    gap: 3px;
+  }
+  .theme-preview-bar {
+    height: 6px;
+    border-radius: 2px;
+    opacity: 0.8;
+  }
+  .theme-preview-line {
+    height: 4px;
+    border-radius: 2px;
+    opacity: 0.5;
+  }
+  .theme-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+    padding: 4px 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* Editor theme selector */
+  .editor-theme-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+  }
+  .et-chip {
+    height: 28px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s;
+    padding: 0 6px;
+    text-align: center;
+  }
+  .et-chip:hover { border-color: var(--border-bright); color: var(--text-primary); }
+  .et-chip.active { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+
+  /* Accent color swatches */
+  .accent-grid {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .accent-swatch {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: transform .1s, border-color .1s;
+    flex-shrink: 0;
+  }
+  .accent-swatch:hover { transform: scale(1.15); }
+  .accent-swatch.active { border-color: white; transform: scale(1.1); }
+  .accent-custom {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 2px dashed var(--border);
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    color: var(--text-muted);
+    transition: border-color .15s;
+  }
+  .accent-custom:hover { border-color: var(--text-secondary); }
+  .accent-custom input[type=color] {
+    position: absolute;
+    opacity: 0;
+    width: 100%; height: 100%;
+    cursor: pointer;
+  }
+
+  /* Text color control */
+  .text-color-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .text-color-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    width: 90px;
+    font-family: var(--font-mono);
+    flex-shrink: 0;
+  }
+  .color-input-wrap {
+    width: 36px; height: 28px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+  .color-input-wrap input[type=color] {
+    position: absolute;
+    inset: -4px;
+    width: calc(100% + 8px);
+    height: calc(100% + 8px);
+    cursor: pointer;
+    border: none;
+    padding: 0;
+  }
+  .color-hex-input {
+    flex: 1;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 5px 8px;
+    outline: none;
+    transition: border-color .15s;
+  }
+  .color-hex-input:focus { border-color: var(--accent); }
+  .color-reset {
+    height: 28px; padding: 0 8px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 10px;
+    cursor: pointer;
+    transition: all .15s;
+    white-space: nowrap;
+    font-family: var(--font-ui);
+  }
+  .color-reset:hover { border-color: var(--border-bright); color: var(--text-primary); }
+
+  /* Font controls */
+  .font-family-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .font-chip {
+    height: 36px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    font-size: 12px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s;
+    padding: 0 6px;
+  }
+  .font-chip:hover { border-color: var(--border-bright); color: var(--text-primary); }
+  .font-chip.active { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+
+  /* Font size slider */
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .slider-row input[type=range] {
+    flex: 1;
+    appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--border);
+    outline: none;
+    cursor: pointer;
+  }
+  .slider-row input[type=range]::-webkit-slider-thumb {
+    appearance: none;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    border: 2px solid var(--bg-panel);
+    box-shadow: 0 0 6px var(--accent-glow);
+  }
+  .slider-val {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    width: 32px;
+    text-align: right;
+  }
+
+  /* Line height & spacing */
+  .setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .setting-row-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+  }
+  .toggle-switch {
+    width: 36px; height: 20px;
+    border-radius: 10px;
+    background: var(--border);
+    position: relative;
+    cursor: pointer;
+    transition: background .2s;
+    flex-shrink: 0;
+    border: none;
+    outline: none;
+  }
+  .toggle-switch.on { background: var(--accent); }
+  .toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: white;
+    transition: left .2s;
+  }
+  .toggle-switch.on::after { left: 19px; }
+
+  /* Settings overlay backdrop */
+  #settings-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 499;
+  }
+  #settings-backdrop.show { display: block; }
+
+  /* ── UI THEME OVERRIDES ── */
+  body.theme-darker {
+    --bg-deepest: #000000;
+    --bg-deep: #080808;
+    --bg-panel: #0e0e0e;
+    --bg-surface: #141414;
+    --bg-hover: #1a1a1a;
+    --bg-active: #1e1e1e;
+    --border: #222222;
+    --border-bright: #333333;
+    --text-secondary: #888888;
+    --text-muted: #444444;
+  }
+  body.theme-nord {
+    --bg-deepest: #1a1f2e;
+    --bg-deep: #1e2433;
+    --bg-panel: #222a3e;
+    --bg-surface: #28304a;
+    --bg-hover: #2e3855;
+    --bg-active: #32405f;
+    --border: #2d3952;
+    --border-bright: #3d4f70;
+    --text-primary: #d8dee9;
+    --text-secondary: #8490a8;
+    --text-muted: #4c5a78;
+  }
+  body.theme-monokai {
+    --bg-deepest: #1a1a16;
+    --bg-deep: #1e1e1a;
+    --bg-panel: #232320;
+    --bg-surface: #292926;
+    --bg-hover: #2f2f2c;
+    --bg-active: #333330;
+    --border: #343430;
+    --border-bright: #484845;
+    --text-primary: #f8f8f2;
+    --text-secondary: #9a9a8a;
+    --text-muted: #565648;
+  }
+  body.theme-light {
+    --bg-deepest: #f3f4f6;
+    --bg-deep: #e8eaed;
+    --bg-panel: #f8f9fb;
+    --bg-surface: #ffffff;
+    --bg-hover: #edf0f3;
+    --bg-active: #e2e6eb;
+    --border: #d1d5de;
+    --border-bright: #b0b8c8;
+    --text-primary: #1a1d2e;
+    --text-secondary: #4a5068;
+    --text-muted: #8890a8;
+    --accent-glow: rgba(240,160,80,0.1);
+  }
+  body.theme-solarized {
+    --bg-deepest: #002028;
+    --bg-deep: #00252e;
+    --bg-panel: #073642;
+    --bg-surface: #0a3d4a;
+    --bg-hover: #0d4655;
+    --bg-active: #0f4e60;
+    --border: #1a4f5f;
+    --border-bright: #2a6070;
+    --text-primary: #eee8d5;
+    --text-secondary: #839496;
+    --text-muted: #3a5a65;
+  }
+
+
+  .lang-js { background: #f7e025; }
+  .lang-ts { background: #3178c6; }
+  .lang-py { background: #4b8bbe; }
+  .lang-html { background: #e34c26; }
+  .lang-css { background: #264de4; }
+  .lang-java { background: #f89820; }
+  .lang-cpp { background: #659ad2; }
+  .lang-c { background: #a8b9cc; }
+  .lang-rs { background: #ce412b; }
+  .lang-go { background: #00add8; }
+  .lang-php { background: #8993c0; }
+  .lang-rb { background: #cc342d; }
+  .lang-sh { background: #89e051; }
+  .lang-sql { background: #e38d13; }
+  .lang-md { background: #7e7e7e; }
+  .lang-yaml { background: #cb171e; }
+  .lang-json { background: #5e9b5e; }
+  .lang-sw { background: #f05237; }
+  .lang-r { background: #198ce7; }
+  .lang-other { background: var(--text-muted); }
+
+  /* ── SCROLLBARS ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--border-bright); }
+
+  /* ── SIDEBAR TOGGLE ── */
+  #sidebar-toggle {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    transition: all .15s;
+  }
+  #sidebar-toggle:hover { border-color: var(--border-bright); color: var(--text-primary); background: var(--bg-hover); }
+
+  /* notification toast */
+  #toast {
+    position: fixed;
+    bottom: 36px;
+    right: 16px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-bright);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all .2s;
+    pointer-events: none;
+    z-index: 999;
+  }
+  #toast.show { opacity: 1; transform: translateY(0); }
+
+  .no-run-notice {
+    padding: 20px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .no-run-notice span { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<!-- TITLEBAR -->
+<div id="titlebar">
+  <div class="logo">
+    <div class="logo-icon">⚡</div>
+    CodeForge
+  </div>
+  <button id="sidebar-toggle" title="Toggle sidebar">≡</button>
+  <div class="tab-bar" id="tab-bar"></div>
+  <button class="tab-add" id="new-tab-btn" title="New file">+</button>
+  <div class="titlebar-actions">
+    <div id="autosave-indicator">
+      <div class="save-dot"></div>
+      <span id="save-text">Auto-save on</span>
+    </div>
+    <button class="btn btn-ghost" id="toggle-output-btn">⬇ Output</button>
+    <button class="btn btn-ghost" id="settings-btn" title="Settings & Themes">⚙ Theme</button>
+    <button class="btn btn-run" id="run-btn">▶ Run</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+  <!-- SIDEBAR -->
+  <div id="sidebar">
+    <div id="lang-panel">
+      <div class="lang-label">Language</div>
+      <select id="lang-select"></select>
+    </div>
+    <div class="sidebar-section">Files</div>
+    <div class="file-list" id="file-list"></div>
+    <div class="sidebar-actions">
+      <button class="btn btn-ghost" id="new-file-btn">+ New</button>
+      <button class="btn btn-ghost" id="clear-storage-btn">🗑 Clear</button>
+    </div>
+  </div>
+
+  <!-- EDITOR AREA -->
+  <div id="editor-area">
+    <div id="editor-container">
+      <textarea id="editor"></textarea>
+      <div id="welcome-overlay">
+        <div class="welcome-logo">CodeForge</div>
+        <div class="welcome-sub">A fast, local code editor</div>
+        <div class="welcome-shortcuts">
+          <div class="shortcut-item"><kbd>Ctrl+Enter</kbd> Run code</div>
+          <div class="shortcut-item"><kbd>Ctrl+S</kbd> Save</div>
+          <div class="shortcut-item"><kbd>Ctrl+/</kbd> Comment</div>
+          <div class="shortcut-item"><kbd>Ctrl+N</kbd> New file</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESIZE HANDLE -->
+    <div id="resize-handle"></div>
+
+    <!-- OUTPUT PANEL -->
+    <div id="output-panel">
+      <div class="output-header">
+        <div class="output-title">Output</div>
+        <div class="output-tabs">
+          <button class="output-tab active" data-tab="console">Console</button>
+          <button class="output-tab" data-tab="preview">Preview</button>
+        </div>
+        <div class="output-actions">
+          <button class="icon-btn" id="clear-console-btn" title="Clear">⊘</button>
+          <button class="icon-btn" id="maximize-output-btn" title="Maximize">⤢</button>
+          <button class="icon-btn" id="close-output-btn" title="Close">✕</button>
+        </div>
+      </div>
+      <div id="output-content">
+        <div class="output-pane active" id="pane-console">
+          <div id="console-output"></div>
+        </div>
+        <div class="output-pane" id="pane-preview">
+          <div id="preview-output"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATUS BAR -->
+<div id="statusbar">
+  <span class="status-item" id="cursor-pos">Ln 1, Col 1</span>
+  <span class="status-item" id="char-count">0 chars</span>
+  <span class="status-item" id="lang-badge">—</span>
+  <span class="status-item" style="margin-left:auto; color: var(--text-muted); font-size:10px;">CodeForge v1.0 · All data saved locally</span>
+</div>
+
+<!-- NEW FILE MODAL -->
+<div class="modal-overlay" id="new-file-modal">
+  <div class="modal">
+    <h3>New File</h3>
+    <div class="modal-field">
+      <label>File Name</label>
+      <input type="text" id="new-file-name" placeholder="main.js" />
+    </div>
+    <div class="modal-field">
+      <label>Language</label>
+      <select id="new-file-lang"></select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="modal-cancel">Cancel</button>
+      <button class="btn btn-run" id="modal-create" style="background:var(--accent);color:#000;">Create</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- SETTINGS BACKDROP -->
+<div id="settings-backdrop"></div>
+
+<!-- SETTINGS PANEL -->
+<div id="settings-panel">
+  <div class="settings-header">
+    <div class="settings-title">⚙ Appearance Settings</div>
+    <button class="settings-close" id="settings-close">✕</button>
+  </div>
+  <div class="settings-body">
+
+    <!-- UI THEME -->
+    <div class="settings-section">
+      <div class="settings-section-title">UI Theme</div>
+      <div class="theme-grid">
+        <div class="theme-card active" data-ui-theme="dark">
+          <div class="theme-preview" style="background:#0d0f14">
+            <div class="theme-preview-bar" style="background:#f0a050;width:60%"></div>
+            <div class="theme-preview-line" style="background:#e8eaf0;width:90%"></div>
+            <div class="theme-preview-line" style="background:#8890b0;width:70%"></div>
+            <div class="theme-preview-line" style="background:#525878;width:50%"></div>
+          </div>
+          <div class="theme-label" style="background:#11141b;color:#e8eaf0">Dark</div>
+        </div>
+        <div class="theme-card" data-ui-theme="darker">
+          <div class="theme-preview" style="background:#000000">
+            <div class="theme-preview-bar" style="background:#f0a050;width:60%"></div>
+            <div class="theme-preview-line" style="background:#e0e0e0;width:90%"></div>
+            <div class="theme-preview-line" style="background:#888888;width:70%"></div>
+            <div class="theme-preview-line" style="background:#444444;width:50%"></div>
+          </div>
+          <div class="theme-label" style="background:#080808;color:#e0e0e0">Darker</div>
+        </div>
+        <div class="theme-card" data-ui-theme="nord">
+          <div class="theme-preview" style="background:#1a1f2e">
+            <div class="theme-preview-bar" style="background:#88c0d0;width:60%"></div>
+            <div class="theme-preview-line" style="background:#d8dee9;width:90%"></div>
+            <div class="theme-preview-line" style="background:#8490a8;width:70%"></div>
+            <div class="theme-preview-line" style="background:#4c5a78;width:50%"></div>
+          </div>
+          <div class="theme-label" style="background:#1e2433;color:#d8dee9">Nord</div>
+        </div>
+        <div class="theme-card" data-ui-theme="monokai">
+          <div class="theme-preview" style="background:#1a1a16">
+            <div class="theme-preview-bar" style="background:#a6e22e;width:60%"></div>
+            <div class="theme-preview-line" style="background:#f8f8f2;width:90%"></div>
+            <div class="theme-preview-line" style="background:#9a9a8a;width:70%"></div>
+            <div class="theme-preview-line" style="background:#565648;width:50%"></div>
+          </div>
+          <div class="theme-label" style="background:#1e1e1a;color:#f8f8f2">Monokai</div>
+        </div>
+        <div class="theme-card" data-ui-theme="solarized">
+          <div class="theme-preview" style="background:#002028">
+            <div class="theme-preview-bar" style="background:#2aa198;width:60%"></div>
+            <div class="theme-preview-line" style="background:#eee8d5;width:90%"></div>
+            <div class="theme-preview-line" style="background:#839496;width:70%"></div>
+            <div class="theme-preview-line" style="background:#3a5a65;width:50%"></div>
+          </div>
+          <div class="theme-label" style="background:#00252e;color:#eee8d5">Solarized</div>
+        </div>
+        <div class="theme-card" data-ui-theme="light">
+          <div class="theme-preview" style="background:#f3f4f6">
+            <div class="theme-preview-bar" style="background:#f0a050;width:60%"></div>
+            <div class="theme-preview-line" style="background:#1a1d2e;width:90%"></div>
+            <div class="theme-preview-line" style="background:#4a5068;width:70%"></div>
+            <div class="theme-preview-line" style="background:#8890a8;width:50%"></div>
+          </div>
+          <div class="theme-label" style="background:#e8eaed;color:#1a1d2e">Light</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDITOR THEME -->
+    <div class="settings-section">
+      <div class="settings-section-title">Editor Theme</div>
+      <div class="editor-theme-grid" id="editor-theme-grid">
+        <div class="et-chip active" data-editor-theme="one-dark">One Dark</div>
+        <div class="et-chip" data-editor-theme="monokai">Monokai</div>
+        <div class="et-chip" data-editor-theme="dracula">Dracula</div>
+        <div class="et-chip" data-editor-theme="nord">Nord</div>
+        <div class="et-chip" data-editor-theme="material-darker">Material</div>
+        <div class="et-chip" data-editor-theme="night">Night</div>
+        <div class="et-chip" data-editor-theme="zenburn">Zenburn</div>
+        <div class="et-chip" data-editor-theme="tomorrow-night-eighties">TN80s</div>
+        <div class="et-chip" data-editor-theme="twilight">Twilight</div>
+        <div class="et-chip" data-editor-theme="solarized dark">Solarized↓</div>
+        <div class="et-chip" data-editor-theme="eclipse">Eclipse</div>
+        <div class="et-chip" data-editor-theme="default">Default</div>
+      </div>
+    </div>
+
+    <!-- ACCENT COLOR -->
+    <div class="settings-section">
+      <div class="settings-section-title">Accent Color</div>
+      <div class="accent-grid">
+        <div class="accent-swatch active" data-accent="#f0a050" style="background:#f0a050" title="Orange"></div>
+        <div class="accent-swatch" data-accent="#50d0f0" style="background:#50d0f0" title="Cyan"></div>
+        <div class="accent-swatch" data-accent="#a070f0" style="background:#a070f0" title="Purple"></div>
+        <div class="accent-swatch" data-accent="#50e090" style="background:#50e090" title="Green"></div>
+        <div class="accent-swatch" data-accent="#f05090" style="background:#f05090" title="Pink"></div>
+        <div class="accent-swatch" data-accent="#f06050" style="background:#f06050" title="Red"></div>
+        <div class="accent-swatch" data-accent="#f0d050" style="background:#f0d050" title="Yellow"></div>
+        <div class="accent-swatch" data-accent="#50a0f0" style="background:#50a0f0" title="Blue"></div>
+        <div class="accent-custom" title="Custom color">
+          🎨
+          <input type="color" id="accent-custom-input" value="#f0a050">
+        </div>
+      </div>
+    </div>
+
+    <!-- TEXT COLORS -->
+    <div class="settings-section">
+      <div class="settings-section-title">Text Colors</div>
+      <div class="text-color-row">
+        <span class="text-color-label">Primary text</span>
+        <div class="color-input-wrap"><input type="color" id="color-text-primary" value="#e8eaf0"></div>
+        <input type="text" class="color-hex-input" id="hex-text-primary" value="#e8eaf0" maxlength="7">
+        <button class="color-reset" data-reset="text-primary" data-default="#e8eaf0">Reset</button>
+      </div>
+      <div class="text-color-row">
+        <span class="text-color-label">Secondary text</span>
+        <div class="color-input-wrap"><input type="color" id="color-text-secondary" value="#8890b0"></div>
+        <input type="text" class="color-hex-input" id="hex-text-secondary" value="#8890b0" maxlength="7">
+        <button class="color-reset" data-reset="text-secondary" data-default="#8890b0">Reset</button>
+      </div>
+      <div class="text-color-row">
+        <span class="text-color-label">Muted text</span>
+        <div class="color-input-wrap"><input type="color" id="color-text-muted" value="#525878"></div>
+        <input type="text" class="color-hex-input" id="hex-text-muted" value="#525878" maxlength="7">
+        <button class="color-reset" data-reset="text-muted" data-default="#525878">Reset</button>
+      </div>
+    </div>
+
+    <!-- FONT FAMILY -->
+    <div class="settings-section">
+      <div class="settings-section-title">Editor Font</div>
+      <div class="font-family-grid" id="font-family-grid">
+        <div class="font-chip active" data-font="'JetBrains Mono', monospace" style="font-family:'JetBrains Mono',monospace">JetBrains Mono</div>
+        <div class="font-chip" data-font="'Fira Code', monospace" style="font-family:'Fira Code',monospace">Fira Code</div>
+        <div class="font-chip" data-font="'Courier New', monospace" style="font-family:'Courier New',monospace">Courier New</div>
+        <div class="font-chip" data-font="'Lucida Console', monospace" style="font-family:'Lucida Console',monospace">Lucida Console</div>
+        <div class="font-chip" data-font="'Consolas', monospace" style="font-family:'Consolas',monospace">Consolas</div>
+        <div class="font-chip" data-font="'Source Code Pro', monospace" style="font-family:'Source Code Pro',monospace">Source Code Pro</div>
+      </div>
+    </div>
+
+    <!-- FONT SIZE -->
+    <div class="settings-section">
+      <div class="settings-section-title">Font Size</div>
+      <div class="slider-row">
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted)">10px</span>
+        <input type="range" id="font-size-slider" min="10" max="24" value="14" step="1">
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted)">24px</span>
+        <span class="slider-val" id="font-size-val">14px</span>
+      </div>
+    </div>
+
+    <!-- LINE HEIGHT -->
+    <div class="settings-section">
+      <div class="settings-section-title">Line Height</div>
+      <div class="slider-row">
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted)">1.2</span>
+        <input type="range" id="line-height-slider" min="1.2" max="2.4" value="1.6" step="0.1">
+        <span style="font-family:var(--font-mono);font-size:10px;color:var(--text-muted)">2.4</span>
+        <span class="slider-val" id="line-height-val">1.6</span>
+      </div>
+    </div>
+
+    <!-- EDITOR OPTIONS -->
+    <div class="settings-section">
+      <div class="settings-section-title">Editor Options</div>
+      <div class="setting-row">
+        <span class="setting-row-label">Line wrapping</span>
+        <button class="toggle-switch" id="toggle-wrap"></button>
+      </div>
+      <div class="setting-row">
+        <span class="setting-row-label">Auto-close brackets</span>
+        <button class="toggle-switch on" id="toggle-brackets"></button>
+      </div>
+      <div class="setting-row">
+        <span class="setting-row-label">Auto-save</span>
+        <button class="toggle-switch on" id="toggle-autosave"></button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+//  LANGUAGE DEFINITIONS
+// ═══════════════════════════════════════════════════
+const LANGUAGES = [
+  { id:'javascript', name:'JavaScript', ext:'js',   mode:'javascript',              color:'lang-js',  canRun:true,  runType:'js'      },
+  { id:'typescript', name:'TypeScript', ext:'ts',   mode:{name:'javascript',typescript:true}, color:'lang-ts', canRun:true, runType:'ts' },
+  { id:'python',     name:'Python',     ext:'py',   mode:'python',                  color:'lang-py',  canRun:true,  runType:'python'  },
+  { id:'html',       name:'HTML',       ext:'html', mode:'htmlmixed',               color:'lang-html',canRun:true,  runType:'html'    },
+  { id:'css',        name:'CSS',        ext:'css',  mode:'css',                     color:'lang-css', canRun:true,  runType:'css'     },
+  { id:'json',       name:'JSON',       ext:'json', mode:{name:'javascript',json:true}, color:'lang-json', canRun:true, runType:'json' },
+  { id:'markdown',   name:'Markdown',   ext:'md',   mode:'markdown',                color:'lang-md',  canRun:true,  runType:'markdown'},
+  { id:'java',       name:'Java',       ext:'java', mode:'text/x-java',             color:'lang-java',canRun:false, runType:null      },
+  { id:'c',          name:'C',          ext:'c',    mode:'text/x-csrc',             color:'lang-c',   canRun:false, runType:null      },
+  { id:'cpp',        name:'C++',        ext:'cpp',  mode:'text/x-c++src',           color:'lang-cpp', canRun:false, runType:null      },
+  { id:'csharp',     name:'C#',         ext:'cs',   mode:'text/x-csharp',           color:'lang-cpp', canRun:false, runType:null      },
+  { id:'rust',       name:'Rust',       ext:'rs',   mode:'rust',                    color:'lang-rs',  canRun:false, runType:null      },
+  { id:'go',         name:'Go',         ext:'go',   mode:'go',                      color:'lang-go',  canRun:false, runType:null      },
+  { id:'php',        name:'PHP',        ext:'php',  mode:'php',                     color:'lang-php', canRun:false, runType:null      },
+  { id:'ruby',       name:'Ruby',       ext:'rb',   mode:'ruby',                    color:'lang-rb',  canRun:false, runType:null      },
+  { id:'swift',      name:'Swift',      ext:'swift',mode:'swift',                   color:'lang-sw',  canRun:false, runType:null      },
+  { id:'shell',      name:'Shell/Bash', ext:'sh',   mode:'shell',                   color:'lang-sh',  canRun:false, runType:null      },
+  { id:'sql',        name:'SQL',        ext:'sql',  mode:'sql',                     color:'lang-sql', canRun:false, runType:null      },
+  { id:'r',          name:'R',          ext:'r',    mode:'r',                       color:'lang-r',   canRun:false, runType:null      },
+  { id:'yaml',       name:'YAML',       ext:'yaml', mode:'yaml',                    color:'lang-yaml',canRun:false, runType:null      },
+  { id:'toml',       name:'TOML',       ext:'toml', mode:'toml',                    color:'lang-other',canRun:false,runType:null      },
+  { id:'xml',        name:'XML',        ext:'xml',  mode:'xml',                     color:'lang-html',canRun:false, runType:null      },
+  { id:'plaintext',  name:'Plain Text', ext:'txt',  mode:'',                        color:'lang-other',canRun:false,runType:null      },
+];
+
+const LANG_MAP = {};
+LANGUAGES.forEach(l => { LANG_MAP[l.id] = l; });
+
+const DEFAULT_SNIPPETS = {
+  javascript: `// JavaScript\nconsole.log("Hello from CodeForge! 🔥");\n\nconst greet = (name) => {\n  return \`Hello, \${name}!\`;\n};\n\nconsole.log(greet("World"));\n\n// Array operations\nconst nums = [1, 2, 3, 4, 5];\nconst doubled = nums.map(n => n * 2);\nconsole.log("Doubled:", doubled);\n`,
+  python:     `# Python\nprint("Hello from CodeForge! 🔥")\n\ndef greet(name):\n    return f"Hello, {name}!"\n\nprint(greet("World"))\n\n# List comprehension\nnums = [1, 2, 3, 4, 5]\ndoubled = [n * 2 for n in nums]\nprint("Doubled:", doubled)\n`,
+  html:       `<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>My Page</title>\n  <style>\n    body {\n      font-family: sans-serif;\n      background: #0d1117;\n      color: #e6edf3;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      height: 100vh;\n      margin: 0;\n    }\n    h1 { color: #f0a050; }\n  </style>\n</head>\n<body>\n  <h1>Hello from CodeForge! ⚡</h1>\n  <p>Edit me and run to see changes.</p>\n</body>\n</html>\n`,
+  css:        `/* CSS Preview */\nbody {\n  font-family: 'Segoe UI', sans-serif;\n  background: linear-gradient(135deg, #0d0f14, #1a1f35);\n  color: #e8eaf0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100vh;\n  margin: 0;\n}\n\n.card {\n  background: rgba(255,255,255,0.05);\n  border: 1px solid rgba(255,255,255,0.1);\n  border-radius: 16px;\n  padding: 32px;\n  text-align: center;\n  backdrop-filter: blur(10px);\n}\n`,
+  json:       `{\n  "name": "my-project",\n  "version": "1.0.0",\n  "description": "A CodeForge project",\n  "scripts": {\n    "start": "node index.js",\n    "dev": "nodemon index.js"\n  },\n  "dependencies": {},\n  "devDependencies": {}\n}\n`,
+  markdown:   `# Hello from CodeForge ⚡\n\nThis is a **Markdown** preview.\n\n## Features\n- Syntax highlighting\n- Auto-save\n- Multi-language support\n- Run code in browser\n\n## Code Example\n\`\`\`js\nconsole.log("Hello World");\n\`\`\`\n\n> Write once, run everywhere.\n`,
+};
+
+// ═══════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════
+let files = [];      // { id, name, lang, content }
+let activeFileId = null;
+let editor = null;
+let autoSaveTimer = null;
+let autoSaveEnabled = true;
+let isOutputHidden = false;
+let isOutputMaximized = false;
+let currentOutputTab = 'console';
+let skulptLoaded = false;
+
+// ═══════════════════════════════════════════════════
+//  STORAGE HELPERS
+// ═══════════════════════════════════════════════════
+const STORAGE_KEY = 'codeforge_v1';
+
+function saveToStorage() {
+  try {
+    const state = { files, activeFileId };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    return true;
+  } catch(e) { return false; }
+}
+
+function loadFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch(e) { return null; }
+}
+
+// ═══════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════
+function init() {
+  populateLangSelects();
+  initEditor();
+  loadState();
+  bindEvents();
+}
+
+function populateLangSelects() {
+  const sel = document.getElementById('lang-select');
+  const sel2 = document.getElementById('new-file-lang');
+  LANGUAGES.forEach(l => {
+    const o = new Option(l.name, l.id);
+    const o2 = new Option(l.name, l.id);
+    sel.appendChild(o);
+    sel2.appendChild(o2);
+  });
+}
+
+function initEditor() {
+  editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+    theme: 'one-dark',
+    lineNumbers: true,
+    lineWrapping: false,
+    autoCloseBrackets: true,
+    matchBrackets: true,
+    foldGutter: true,
+    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+    extraKeys: {
+      'Ctrl-Enter': runCode,
+      'Ctrl-S': manualSave,
+      'Ctrl-/': 'toggleComment',
+      'Ctrl-N': () => showNewFileModal(),
+      'Tab': (cm) => {
+        if (cm.somethingSelected()) cm.indentSelection('add');
+        else cm.replaceSelection('  ');
+      },
+    },
+    indentUnit: 2,
+    tabSize: 2,
+  });
+
+  editor.on('cursorActivity', updateCursorPos);
+  editor.on('change', () => {
+    updateCharCount();
+    scheduleAutoSave();
+  });
+}
+
+function loadState() {
+  const saved = loadFromStorage();
+  if (saved && saved.files && saved.files.length > 0) {
+    files = saved.files;
+    renderFileList();
+    renderTabs();
+    const target = saved.activeFileId && files.find(f => f.id === saved.activeFileId)
+      ? saved.activeFileId
+      : files[0].id;
+    openFile(target);
+    showToast('📂 Session restored');
+  } else {
+    // Create default files
+    createFile('main.js', 'javascript', DEFAULT_SNIPPETS.javascript);
+    createFile('index.html', 'html', DEFAULT_SNIPPETS.html);
+    openFile(files[0].id);
+  }
+}
+
+// ═══════════════════════════════════════════════════
+//  FILE MANAGEMENT
+// ═══════════════════════════════════════════════════
+function genId() { return 'f_' + Date.now() + '_' + Math.random().toString(36).slice(2); }
+
+function createFile(name, langId, content = '') {
+  const file = { id: genId(), name, lang: langId, content };
+  files.push(file);
+  renderFileList();
+  renderTabs();
+  saveToStorage();
+  return file;
+}
+
+function openFile(id) {
+  const file = files.find(f => f.id === id);
+  if (!file) return;
+
+  // Save current editor content to previous file
+  if (activeFileId && activeFileId !== id) {
+    const prev = files.find(f => f.id === activeFileId);
+    if (prev) prev.content = editor.getValue();
+  }
+
+  activeFileId = id;
+  const lang = LANG_MAP[file.lang] || LANG_MAP['plaintext'];
+
+  editor.setValue(file.content);
+  editor.setOption('mode', lang.mode);
+  document.getElementById('lang-select').value = file.lang;
+  document.getElementById('lang-badge').textContent = lang.name;
+
+  // Update run button
+  const runBtn = document.getElementById('run-btn');
+  if (lang.canRun) {
+    runBtn.disabled = false;
+    runBtn.style.opacity = '1';
+    runBtn.title = `Run ${lang.name} (Ctrl+Enter)`;
+  } else {
+    runBtn.disabled = false; // still clickable, will show notice
+    runBtn.style.opacity = '0.7';
+    runBtn.title = `${lang.name} cannot run in browser`;
+  }
+
+  renderTabs();
+  renderFileList();
+  updateCharCount();
+  saveToStorage();
+
+  // Hide welcome if shown
+  document.getElementById('welcome-overlay').classList.remove('show');
+  editor.refresh();
+  editor.focus();
+}
+
+function deleteFile(id) {
+  if (files.length === 1) { showToast('⚠️ Cannot delete last file'); return; }
+  files = files.filter(f => f.id !== id);
+  if (activeFileId === id) {
+    openFile(files[0].id);
+  }
+  renderFileList();
+  renderTabs();
+  saveToStorage();
+}
+
+function renameActiveFile(newName) {
+  const file = files.find(f => f.id === activeFileId);
+  if (file) { file.name = newName; renderFileList(); renderTabs(); saveToStorage(); }
+}
+
+// ═══════════════════════════════════════════════════
+//  RENDERING
+// ═══════════════════════════════════════════════════
+function getLangColor(langId) {
+  return (LANG_MAP[langId] || {}).color || 'lang-other';
+}
+
+function getFileIcon(langId) {
+  const icons = {
+    javascript:'🟨', typescript:'🟦', python:'🐍', html:'🌐', css:'🎨',
+    json:'📋', markdown:'📝', java:'☕', c:'⚙️', cpp:'⚙️', csharp:'💜',
+    rust:'🦀', go:'🐹', php:'🐘', ruby:'💎', swift:'🦅', shell:'🐚',
+    sql:'🗃️', r:'📊', yaml:'📄', toml:'📄', xml:'📄', plaintext:'📄',
+  };
+  return icons[langId] || '📄';
+}
+
+function renderTabs() {
+  const bar = document.getElementById('tab-bar');
+  bar.innerHTML = '';
+  files.forEach(file => {
+    const tab = document.createElement('div');
+    tab.className = 'tab' + (file.id === activeFileId ? ' active' : '');
+    tab.innerHTML = `
+      <span class="lang-dot ${getLangColor(file.lang)}"></span>
+      <span>${file.name}</span>
+      <span class="tab-close" data-id="${file.id}">✕</span>
+    `;
+    tab.addEventListener('click', (e) => {
+      if (e.target.classList.contains('tab-close')) return;
+      openFile(file.id);
+    });
+    tab.querySelector('.tab-close').addEventListener('click', () => deleteFile(file.id));
+    bar.appendChild(tab);
+  });
+}
+
+function renderFileList() {
+  const list = document.getElementById('file-list');
+  list.innerHTML = '';
+  files.forEach(file => {
+    const item = document.createElement('div');
+    item.className = 'file-item' + (file.id === activeFileId ? ' active' : '');
+    item.innerHTML = `
+      <span class="fi-icon">${getFileIcon(file.lang)}</span>
+      <span class="fi-name">${file.name}</span>
+      <span class="fi-del" data-id="${file.id}">✕</span>
+    `;
+    item.addEventListener('click', (e) => {
+      if (e.target.classList.contains('fi-del')) return;
+      openFile(file.id);
+    });
+    item.querySelector('.fi-del').addEventListener('click', () => deleteFile(file.id));
+    list.appendChild(item);
+  });
+}
+
+// ═══════════════════════════════════════════════════
+//  AUTO-SAVE
+// ═══════════════════════════════════════════════════
+function scheduleAutoSave() {
+  if (!autoSaveEnabled) return;
+  clearTimeout(autoSaveTimer);
+  setIndicator('saving');
+  autoSaveTimer = setTimeout(() => {
+    const file = files.find(f => f.id === activeFileId);
+    if (file) file.content = editor.getValue();
+    const ok = saveToStorage();
+    setIndicator(ok ? 'saved' : 'error');
+    setTimeout(() => setIndicator('idle'), 2000);
+  }, 800);
+}
+
+function setIndicator(state) {
+  const el = document.getElementById('autosave-indicator');
+  const txt = document.getElementById('save-text');
+  el.className = '';
+  if (state === 'saving') { el.classList.add('saving'); txt.textContent = 'Saving…'; }
+  else if (state === 'saved') { el.classList.add('saved'); txt.textContent = 'Saved ✓'; }
+  else if (state === 'error') { txt.textContent = 'Save failed'; }
+  else { txt.textContent = 'Auto-save on'; }
+}
+
+function manualSave() {
+  const file = files.find(f => f.id === activeFileId);
+  if (file) file.content = editor.getValue();
+  saveToStorage();
+  showToast('💾 Saved');
+}
+
+// ═══════════════════════════════════════════════════
+//  STATUS BAR
+// ═══════════════════════════════════════════════════
+function updateCursorPos() {
+  const c = editor.getCursor();
+  document.getElementById('cursor-pos').textContent = `Ln ${c.line+1}, Col ${c.ch+1}`;
+}
+
+function updateCharCount() {
+  const len = editor.getValue().length;
+  document.getElementById('char-count').textContent = `${len.toLocaleString()} chars`;
+}
+
+// ═══════════════════════════════════════════════════
+//  RUN CODE
+// ═══════════════════════════════════════════════════
+function runCode() {
+  const file = files.find(f => f.id === activeFileId);
+  if (!file) return;
+  const lang = LANG_MAP[file.lang];
+  const code = editor.getValue();
+
+  showOutput();
+  if (!lang || !lang.canRun) {
+    switchOutputTab('console');
+    clearConsole();
+    appendConsole('system', `⚠️  ${lang ? lang.name : 'This language'} cannot be executed in the browser.`);
+    appendConsole('system', `Supported: JavaScript, TypeScript, Python, HTML, CSS, JSON, Markdown`);
+    return;
+  }
+
+  const runBtn = document.getElementById('run-btn');
+  runBtn.classList.add('loading');
+  runBtn.textContent = '⏳ Running…';
+
+  setTimeout(() => {
+    try {
+      switch(lang.runType) {
+        case 'js': case 'ts': runJavaScript(code); break;
+        case 'python':        runPython(code); break;
+        case 'html':          runHTML(code); break;
+        case 'css':           runCSS(code); break;
+        case 'json':          runJSON(code); break;
+        case 'markdown':      runMarkdown(code); break;
+      }
+    } catch(e) {
+      switchOutputTab('console');
+      appendConsole('error', '🔴 ' + e.message);
+    } finally {
+      runBtn.classList.remove('loading');
+      runBtn.textContent = '▶ Run';
+    }
+  }, 50);
+}
+
+function runJavaScript(code) {
+  switchOutputTab('console');
+  clearConsole();
+  appendConsole('system', '▶ Running JavaScript…');
+
+  const logs = [];
+  const origLog = console.log;
+  const origErr = console.error;
+  const origWarn = console.warn;
+  const origInfo = console.info;
+
+  const capture = (type) => (...args) => {
+    const msg = args.map(a => {
+      if (typeof a === 'object') { try { return JSON.stringify(a, null, 2); } catch { return String(a); } }
+      return String(a);
+    }).join(' ');
+    appendConsole(type, msg);
+  };
+
+  console.log = capture('log');
+  console.error = capture('error');
+  console.warn = capture('warn');
+  console.info = capture('info');
+
+  // Capture uncaught errors
+  const oldOnerror = window.onerror;
+  window.onerror = (msg, src, line) => {
+    appendConsole('error', `🔴 ${msg} (line ${line})`);
+    return true;
+  };
+
+  try {
+    // Wrap in async to allow await at top level (basic)
+    const fn = new Function(code);
+    const result = fn();
+    if (result instanceof Promise) {
+      result.then(() => appendConsole('success', '✓ Done'))
+            .catch(e => appendConsole('error', '🔴 ' + e.message));
+    } else {
+      appendConsole('success', '✓ Done');
+    }
+  } catch(e) {
+    appendConsole('error', '🔴 ' + e.toString());
+  } finally {
+    console.log = origLog;
+    console.error = origErr;
+    console.warn = origWarn;
+    console.info = origInfo;
+    window.onerror = oldOnerror;
+  }
+}
+
+function loadSkulpt() {
+  return new Promise((resolve, reject) => {
+    if (typeof Sk !== 'undefined') { resolve(); return; }
+
+    const s1 = document.createElement('script');
+    s1.src = 'https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js';
+    s1.onerror = () => reject(new Error('Failed to load Skulpt runtime'));
+    s1.onload = () => {
+      const s2 = document.createElement('script');
+      s2.src = 'https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js';
+      s2.onerror = () => reject(new Error('Failed to load Skulpt stdlib'));
+      s2.onload = () => resolve();
+      document.head.appendChild(s2);
+    };
+    document.head.appendChild(s1);
+  });
+}
+
+function runPython(code) {
+  switchOutputTab('console');
+  clearConsole();
+  appendConsole('system', '▶ Loading Python runtime…');
+
+  const runBtn = document.getElementById('run-btn');
+  runBtn.classList.add('loading');
+  runBtn.textContent = '⏳ Running…';
+
+  loadSkulpt().then(() => {
+    appendConsole('system', '▶ Running Python…');
+    Sk.configure({
+      output: (text) => { if (text.trim()) appendConsole('log', text.replace(/\n$/, '')); },
+      read: (x) => {
+        if (Sk.builtinFiles === undefined || Sk.builtinFiles.files[x] === undefined)
+          throw "File not found: '" + x + "'";
+        return Sk.builtinFiles.files[x];
+      },
+      execLimit: 15000,
+    });
+    return Sk.misceval.asyncToPromise(() =>
+      Sk.importMainWithBody('<stdin>', false, code, true)
+    );
+  }).then(() => {
+    appendConsole('success', '✓ Done');
+  }).catch((e) => {
+    appendConsole('error', '🔴 ' + e.toString());
+  }).finally(() => {
+    runBtn.classList.remove('loading');
+    runBtn.textContent = '▶ Run';
+  });
+}
+
+function runHTML(code) {
+  switchOutputTab('preview');
+  const container = document.getElementById('preview-output');
+  container.innerHTML = '';
+  const iframe = document.createElement('iframe');
+  iframe.style.cssText = 'width:100%;height:100%;border:none;background:#fff;';
+  container.appendChild(iframe);
+  const doc = iframe.contentDocument || iframe.contentWindow.document;
+  doc.open(); doc.write(code); doc.close();
+
+  // Also log to console
+  clearConsole();
+  appendConsole('success', '✓ HTML rendered in Preview tab');
+}
+
+function runCSS(code) {
+  switchOutputTab('preview');
+  const html = `<!DOCTYPE html>
+<html><head>
+<style>${code}</style>
+</head><body>
+<div class="card">
+  <h1>CSS Preview</h1>
+  <p>Your styles are applied to this page.</p>
+  <button>Sample Button</button>
+</div>
+</body></html>`;
+  const container = document.getElementById('preview-output');
+  container.innerHTML = '';
+  const iframe = document.createElement('iframe');
+  iframe.style.cssText = 'width:100%;height:100%;border:none;background:#fff;';
+  container.appendChild(iframe);
+  const doc = iframe.contentDocument || iframe.contentWindow.document;
+  doc.open(); doc.write(html); doc.close();
+  clearConsole();
+  appendConsole('success', '✓ CSS rendered in Preview tab');
+}
+
+function runJSON(code) {
+  switchOutputTab('console');
+  clearConsole();
+  appendConsole('system', '▶ Validating JSON…');
+  try {
+    const parsed = JSON.parse(code);
+    const pretty = JSON.stringify(parsed, null, 2);
+    appendConsole('success', '✓ Valid JSON');
+    appendConsole('info', `Keys: ${Array.isArray(parsed) ? `Array[${parsed.length}]` : Object.keys(parsed).join(', ')}`);
+    appendConsole('log', pretty);
+  } catch(e) {
+    appendConsole('error', '🔴 Invalid JSON: ' + e.message);
+  }
+}
+
+function runMarkdown(code) {
+  switchOutputTab('preview');
+  // Simple markdown to HTML conversion
+  let html = code
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/```[\w]*\n([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>')
+    .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2">$1</a>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/\n/g, '<br>');
+
+  const fullHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8">
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         max-width: 700px; margin: 40px auto; padding: 0 20px;
+         color: #24292e; line-height: 1.7; }
+  h1,h2,h3 { border-bottom: 1px solid #eee; padding-bottom: 6px; margin-top: 24px; }
+  code { background: #f6f8fa; padding: 2px 5px; border-radius: 3px; font-size: 85%; }
+  pre { background: #f6f8fa; padding: 16px; border-radius: 6px; overflow-x: auto; }
+  blockquote { border-left: 4px solid #ddd; margin: 0; padding: 0 16px; color: #666; }
+  a { color: #0366d6; }
+</style></head><body><p>${html}</p></body></html>`;
+
+  const container = document.getElementById('preview-output');
+  container.innerHTML = '';
+  const iframe = document.createElement('iframe');
+  iframe.style.cssText = 'width:100%;height:100%;border:none;background:#fff;';
+  container.appendChild(iframe);
+  const doc = iframe.contentDocument || iframe.contentWindow.document;
+  doc.open(); doc.write(fullHtml); doc.close();
+  clearConsole();
+  appendConsole('success', '✓ Markdown rendered in Preview tab');
+}
+
+// ═══════════════════════════════════════════════════
+//  CONSOLE HELPERS
+// ═══════════════════════════════════════════════════
+function clearConsole() {
+  document.getElementById('console-output').innerHTML = '';
+}
+
+function appendConsole(type, text) {
+  const out = document.getElementById('console-output');
+  const prefixes = { error:'✖', warn:'⚠', info:'ℹ', log:'›', success:'✔', system:'·' };
+  const line = document.createElement('div');
+  line.className = `console-line ${type}`;
+  line.innerHTML = `<span class="console-prefix">${prefixes[type] || '›'}</span><span>${escapeHtml(text)}</span>`;
+  out.appendChild(line);
+  out.scrollTop = out.scrollHeight;
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ═══════════════════════════════════════════════════
+//  OUTPUT PANEL
+// ═══════════════════════════════════════════════════
+function showOutput() {
+  const panel = document.getElementById('output-panel');
+  panel.classList.remove('hidden');
+  isOutputHidden = false;
+}
+
+function switchOutputTab(tab) {
+  currentOutputTab = tab;
+  document.querySelectorAll('.output-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.tab === tab);
+  });
+  document.querySelectorAll('.output-pane').forEach(p => {
+    p.classList.toggle('active', p.id === `pane-${tab}`);
+  });
+  showOutput();
+}
+
+// ═══════════════════════════════════════════════════
+//  MODAL
+// ═══════════════════════════════════════════════════
+function showNewFileModal() {
+  document.getElementById('new-file-name').value = '';
+  document.getElementById('new-file-modal').classList.add('show');
+  document.getElementById('new-file-name').focus();
+}
+
+function hideModal() {
+  document.getElementById('new-file-modal').classList.remove('show');
+}
+
+function createFromModal() {
+  let name = document.getElementById('new-file-name').value.trim();
+  const langId = document.getElementById('new-file-lang').value;
+  const lang = LANG_MAP[langId];
+  if (!name) name = `untitled.${lang.ext}`;
+  if (!name.includes('.')) name += '.' + lang.ext;
+  const content = DEFAULT_SNIPPETS[langId] || `// ${name}\n`;
+  const file = createFile(name, langId, content);
+  openFile(file.id);
+  hideModal();
+}
+
+// ═══════════════════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════════════════
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ═══════════════════════════════════════════════════
+//  RESIZE OUTPUT PANEL
+// ═══════════════════════════════════════════════════
+let isResizing = false;
+let resizeStartY = 0;
+let resizeStartHeight = 0;
+
+document.getElementById('resize-handle').addEventListener('mousedown', (e) => {
+  isResizing = true;
+  resizeStartY = e.clientY;
+  resizeStartHeight = document.getElementById('output-panel').offsetHeight;
+  document.body.style.cursor = 'ns-resize';
+  document.body.style.userSelect = 'none';
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (!isResizing) return;
+  const delta = resizeStartY - e.clientY;
+  const newH = Math.max(80, Math.min(600, resizeStartHeight + delta));
+  document.getElementById('output-panel').style.height = newH + 'px';
+});
+
+document.addEventListener('mouseup', () => {
+  if (isResizing) {
+    isResizing = false;
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+  }
+});
+
+// ═══════════════════════════════════════════════════
+//  BIND EVENTS
+// ═══════════════════════════════════════════════════
+function bindEvents() {
+  // Run button
+  document.getElementById('run-btn').addEventListener('click', runCode);
+
+  // Language selector
+  document.getElementById('lang-select').addEventListener('change', (e) => {
+    const file = files.find(f => f.id === activeFileId);
+    if (!file) return;
+    file.lang = e.target.value;
+    const lang = LANG_MAP[file.lang];
+    editor.setOption('mode', lang.mode);
+    document.getElementById('lang-badge').textContent = lang.name;
+    // Update filename extension
+    const parts = file.name.split('.');
+    if (parts.length > 1) {
+      parts[parts.length-1] = lang.ext;
+      file.name = parts.join('.');
+    }
+    renderTabs();
+    renderFileList();
+    saveToStorage();
+  });
+
+  // New file buttons
+  document.getElementById('new-tab-btn').addEventListener('click', showNewFileModal);
+  document.getElementById('new-file-btn').addEventListener('click', showNewFileModal);
+
+  // Modal
+  document.getElementById('modal-cancel').addEventListener('click', hideModal);
+  document.getElementById('modal-create').addEventListener('click', createFromModal);
+  document.getElementById('new-file-name').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') createFromModal();
+    if (e.key === 'Escape') hideModal();
+  });
+  document.getElementById('new-file-modal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) hideModal();
+  });
+
+  // New file lang → auto update filename
+  document.getElementById('new-file-lang').addEventListener('change', (e) => {
+    const nameInput = document.getElementById('new-file-name');
+    const lang = LANG_MAP[e.target.value];
+    if (!nameInput.value || nameInput.value.startsWith('untitled')) {
+      nameInput.value = `untitled.${lang.ext}`;
+    }
+  });
+
+  // Output panel controls
+  document.getElementById('toggle-output-btn').addEventListener('click', () => {
+    const panel = document.getElementById('output-panel');
+    isOutputHidden = !isOutputHidden;
+    panel.classList.toggle('hidden', isOutputHidden);
+    document.getElementById('toggle-output-btn').textContent = isOutputHidden ? '⬆ Output' : '⬇ Output';
+  });
+
+  document.getElementById('close-output-btn').addEventListener('click', () => {
+    document.getElementById('output-panel').classList.add('hidden');
+    isOutputHidden = true;
+    document.getElementById('toggle-output-btn').textContent = '⬆ Output';
+  });
+
+  document.getElementById('maximize-output-btn').addEventListener('click', () => {
+    const panel = document.getElementById('output-panel');
+    isOutputMaximized = !isOutputMaximized;
+    panel.classList.toggle('maximized', isOutputMaximized);
+    document.getElementById('maximize-output-btn').textContent = isOutputMaximized ? '⤡' : '⤢';
+  });
+
+  document.getElementById('clear-console-btn').addEventListener('click', clearConsole);
+
+  // Output tabs
+  document.querySelectorAll('.output-tab').forEach(btn => {
+    btn.addEventListener('click', () => switchOutputTab(btn.dataset.tab));
+  });
+
+  // Sidebar toggle
+  document.getElementById('sidebar-toggle').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('collapsed');
+    editor.refresh();
+  });
+
+  // Clear storage
+  document.getElementById('clear-storage-btn').addEventListener('click', () => {
+    if (confirm('Clear all saved files? This cannot be undone.')) {
+      localStorage.removeItem(STORAGE_KEY);
+      files = [];
+      createFile('main.js', 'javascript', DEFAULT_SNIPPETS.javascript);
+      openFile(files[0].id);
+      showToast('🗑 Storage cleared');
+    }
+  });
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'n') { e.preventDefault(); showNewFileModal(); }
+  });
+}
+
+// ═══════════════════════════════════════════════════
+//  APPEARANCE / THEME SYSTEM
+// ═══════════════════════════════════════════════════
+const APPEARANCE_KEY = 'codeforge_appearance_v1';
+
+const DEFAULT_APPEARANCE = {
+  uiTheme: 'dark',
+  editorTheme: 'one-dark',
+  accent: '#f0a050',
+  textPrimary: '#e8eaf0',
+  textSecondary: '#8890b0',
+  textMuted: '#525878',
+  fontFamily: "'JetBrains Mono', monospace",
+  fontSize: 14,
+  lineHeight: 1.6,
+  lineWrap: false,
+  autoCloseBrackets: true,
+};
+
+let appearance = { ...DEFAULT_APPEARANCE };
+
+function loadAppearance() {
+  try {
+    const raw = localStorage.getItem(APPEARANCE_KEY);
+    if (raw) appearance = { ...DEFAULT_APPEARANCE, ...JSON.parse(raw) };
+  } catch(e) {}
+}
+
+function saveAppearance() {
+  localStorage.setItem(APPEARANCE_KEY, JSON.stringify(appearance));
+}
+
+function applyAppearance() {
+  const root = document.documentElement;
+  const body = document.body;
+
+  // UI Theme class
+  body.className = body.className.replace(/theme-\S+/g, '').trim();
+  if (appearance.uiTheme !== 'dark') body.classList.add('theme-' + appearance.uiTheme);
+
+  // Accent color & derived
+  const acc = appearance.accent;
+  root.style.setProperty('--accent', acc);
+  root.style.setProperty('--accent-dim', shadeColor(acc, -0.25));
+  root.style.setProperty('--accent-glow', hexToRgba(acc, 0.15));
+
+  // Text colors
+  root.style.setProperty('--text-primary', appearance.textPrimary);
+  root.style.setProperty('--text-secondary', appearance.textSecondary);
+  root.style.setProperty('--text-muted', appearance.textMuted);
+
+  // Editor font & size
+  applyEditorStyle();
+
+  // Editor theme
+  if (editor) {
+    editor.setOption('theme', appearance.editorTheme);
+    editor.setOption('lineWrapping', appearance.lineWrap);
+    editor.setOption('autoCloseBrackets', appearance.autoCloseBrackets);
+  }
+
+  // Sync settings panel UI
+  syncSettingsUI();
+}
+
+function applyEditorStyle() {
+  let styleEl = document.getElementById('editor-custom-style');
+  if (!styleEl) {
+    styleEl = document.createElement('style');
+    styleEl.id = 'editor-custom-style';
+    document.head.appendChild(styleEl);
+  }
+  styleEl.textContent = `
+    .CodeMirror {
+      font-family: ${appearance.fontFamily} !important;
+      font-size: ${appearance.fontSize}px !important;
+      line-height: ${appearance.lineHeight} !important;
+    }
+  `;
+  if (editor) editor.refresh();
+}
+
+function syncSettingsUI() {
+  // UI theme cards
+  document.querySelectorAll('[data-ui-theme]').forEach(el => {
+    el.classList.toggle('active', el.dataset.uiTheme === appearance.uiTheme);
+  });
+
+  // Editor theme chips
+  document.querySelectorAll('[data-editor-theme]').forEach(el => {
+    el.classList.toggle('active', el.dataset.editorTheme === appearance.editorTheme);
+  });
+
+  // Accent swatches
+  document.querySelectorAll('.accent-swatch').forEach(el => {
+    el.classList.toggle('active', el.dataset.accent === appearance.accent);
+  });
+  document.getElementById('accent-custom-input').value = appearance.accent;
+
+  // Text color inputs
+  syncColorInputs('text-primary', appearance.textPrimary);
+  syncColorInputs('text-secondary', appearance.textSecondary);
+  syncColorInputs('text-muted', appearance.textMuted);
+
+  // Font family
+  document.querySelectorAll('[data-font]').forEach(el => {
+    el.classList.toggle('active', el.dataset.font === appearance.fontFamily);
+  });
+
+  // Font size
+  const fsSlider = document.getElementById('font-size-slider');
+  fsSlider.value = appearance.fontSize;
+  document.getElementById('font-size-val').textContent = appearance.fontSize + 'px';
+
+  // Line height
+  const lhSlider = document.getElementById('line-height-slider');
+  lhSlider.value = appearance.lineHeight;
+  document.getElementById('line-height-val').textContent = appearance.lineHeight;
+
+  // Toggles
+  setToggle('toggle-wrap', appearance.lineWrap);
+  setToggle('toggle-brackets', appearance.autoCloseBrackets);
+  setToggle('toggle-autosave', autoSaveEnabled);
+}
+
+function syncColorInputs(key, value) {
+  const colorInput = document.getElementById('color-' + key);
+  const hexInput = document.getElementById('hex-' + key);
+  if (colorInput) colorInput.value = value;
+  if (hexInput) hexInput.value = value;
+}
+
+function setToggle(id, on) {
+  const el = document.getElementById(id);
+  if (el) el.classList.toggle('on', !!on);
+}
+
+// Color utilities
+function shadeColor(hex, pct) {
+  const num = parseInt(hex.replace('#',''), 16);
+  const r = Math.min(255, Math.max(0, Math.round((num >> 16) * (1 + pct))));
+  const g = Math.min(255, Math.max(0, Math.round(((num >> 8) & 0xff) * (1 + pct))));
+  const b = Math.min(255, Math.max(0, Math.round((num & 0xff) * (1 + pct))));
+  return '#' + [r,g,b].map(v => v.toString(16).padStart(2,'0')).join('');
+}
+function hexToRgba(hex, alpha) {
+  const num = parseInt(hex.replace('#',''), 16);
+  const r = (num >> 16) & 255, g = (num >> 8) & 255, b = num & 255;
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+// ── Settings panel open/close ──
+function openSettings() {
+  document.getElementById('settings-panel').classList.add('open');
+  document.getElementById('settings-backdrop').classList.add('show');
+  syncSettingsUI();
+}
+function closeSettings() {
+  document.getElementById('settings-panel').classList.remove('open');
+  document.getElementById('settings-backdrop').classList.remove('show');
+}
+
+// ── Bind all settings controls ──
+function bindSettingsEvents() {
+  document.getElementById('settings-btn').addEventListener('click', openSettings);
+  document.getElementById('settings-close').addEventListener('click', closeSettings);
+  document.getElementById('settings-backdrop').addEventListener('click', closeSettings);
+
+  // UI themes
+  document.querySelectorAll('[data-ui-theme]').forEach(el => {
+    el.addEventListener('click', () => {
+      appearance.uiTheme = el.dataset.uiTheme;
+      saveAppearance(); applyAppearance();
+    });
+  });
+
+  // Editor themes
+  document.querySelectorAll('[data-editor-theme]').forEach(el => {
+    el.addEventListener('click', () => {
+      appearance.editorTheme = el.dataset.editorTheme;
+      if (editor) editor.setOption('theme', appearance.editorTheme);
+      saveAppearance(); syncSettingsUI();
+    });
+  });
+
+  // Accent swatches
+  document.querySelectorAll('.accent-swatch').forEach(el => {
+    el.addEventListener('click', () => {
+      appearance.accent = el.dataset.accent;
+      saveAppearance(); applyAppearance();
+    });
+  });
+
+  // Accent custom picker
+  document.getElementById('accent-custom-input').addEventListener('input', (e) => {
+    appearance.accent = e.target.value;
+    document.querySelectorAll('.accent-swatch').forEach(s => s.classList.remove('active'));
+    saveAppearance(); applyAppearance();
+  });
+
+  // Text color pickers
+  const textColorBindings = [
+    { key: 'textPrimary', colorId: 'color-text-primary', hexId: 'hex-text-primary' },
+    { key: 'textSecondary', colorId: 'color-text-secondary', hexId: 'hex-text-secondary' },
+    { key: 'textMuted', colorId: 'color-text-muted', hexId: 'hex-text-muted' },
+  ];
+  textColorBindings.forEach(({ key, colorId, hexId }) => {
+    const colorInput = document.getElementById(colorId);
+    const hexInput = document.getElementById(hexId);
+
+    colorInput.addEventListener('input', (e) => {
+      appearance[key] = e.target.value;
+      hexInput.value = e.target.value;
+      saveAppearance(); applyAppearance();
+    });
+    hexInput.addEventListener('input', (e) => {
+      const val = e.target.value;
+      if (/^#[0-9a-fA-F]{6}$/.test(val)) {
+        appearance[key] = val;
+        colorInput.value = val;
+        saveAppearance(); applyAppearance();
+      }
+    });
+  });
+
+  // Reset buttons
+  document.querySelectorAll('[data-reset]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.reset;
+      const def = btn.dataset.default;
+      const keyMap = { 'text-primary': 'textPrimary', 'text-secondary': 'textSecondary', 'text-muted': 'textMuted' };
+      const appKey = keyMap[key];
+      if (appKey) {
+        appearance[appKey] = def;
+        saveAppearance(); applyAppearance();
+        showToast('↺ Color reset');
+      }
+    });
+  });
+
+  // Font families
+  document.querySelectorAll('[data-font]').forEach(el => {
+    el.addEventListener('click', () => {
+      appearance.fontFamily = el.dataset.font;
+      saveAppearance(); applyAppearance();
+    });
+  });
+
+  // Font size slider
+  document.getElementById('font-size-slider').addEventListener('input', (e) => {
+    appearance.fontSize = parseInt(e.target.value);
+    document.getElementById('font-size-val').textContent = appearance.fontSize + 'px';
+    saveAppearance(); applyEditorStyle();
+  });
+
+  // Line height slider
+  document.getElementById('line-height-slider').addEventListener('input', (e) => {
+    appearance.lineHeight = parseFloat(e.target.value);
+    document.getElementById('line-height-val').textContent = appearance.lineHeight;
+    saveAppearance(); applyEditorStyle();
+  });
+
+  // Toggle: line wrap
+  document.getElementById('toggle-wrap').addEventListener('click', (e) => {
+    appearance.lineWrap = !appearance.lineWrap;
+    setToggle('toggle-wrap', appearance.lineWrap);
+    if (editor) editor.setOption('lineWrapping', appearance.lineWrap);
+    saveAppearance();
+  });
+
+  // Toggle: auto close brackets
+  document.getElementById('toggle-brackets').addEventListener('click', () => {
+    appearance.autoCloseBrackets = !appearance.autoCloseBrackets;
+    setToggle('toggle-brackets', appearance.autoCloseBrackets);
+    if (editor) editor.setOption('autoCloseBrackets', appearance.autoCloseBrackets);
+    saveAppearance();
+  });
+
+  // Toggle: autosave (reuse existing autoSaveEnabled)
+  document.getElementById('toggle-autosave').addEventListener('click', () => {
+    autoSaveEnabled = !autoSaveEnabled;
+    setToggle('toggle-autosave', autoSaveEnabled);
+    document.getElementById('save-text').textContent = autoSaveEnabled ? 'Auto-save on' : 'Auto-save off';
+  });
+}
+
+// ═══════════════════════════════════════════════════
+//  START
+// ═══════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  try {
+    loadAppearance();
+    init();
+    applyAppearance();
+    bindSettingsEvents();
+  } catch(e) {
+    console.error('CodeForge init error:', e);
+  }
+});
+</script>
+</body>
+</html>
